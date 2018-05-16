@@ -15,7 +15,9 @@
   "scripts": {
     "test": "gulp test",
     "serve": "nodemon server.js",
-    "build": "gulp"
+    "build": "gulp",
+    "dev": "webpack -wd",
+    "prod": "webpack -p"
   },
   "license": "ISC",
   "repository": {},
@@ -37,16 +39,25 @@
     "mysql": "*",
     "passport": "*",
     "prettyjson": "*",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "serve-favicon": "*",
     "socket.io": "^2.1.0",
     "ws": "*"
   },
   "devDependencies": {
-    "babel-cli": "*",
+    "babel": "^6.23.0",
+    "babel-loader": "^7.1.4",
+    "babel-cli": "^6.26.0",
     "babel-core": "*",
+    "babel-eslint": "^8.2.3",
     "babel-preset-env": "*",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "chai": "*",
     "debug": "*",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.8.2",
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-changed": "*",
@@ -60,6 +71,7 @@
     "gulp-uglify-es": "*",
     "gulp-uglifycss": "*",
     "jshint": "*",
-    "webpack": "^4.8.3"
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
   }
 }

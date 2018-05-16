@@ -14,7 +14,7 @@
 {{!-- Signed In User --}}
 <img id='loggedInUser' class="socialImage commentThumb" title="Sign Out" />
 
-<section>
+<section id="mainSection">
     <div>
         <span id="numPlayers">Players: 0</span>
         <span id="score">Score: 0</span>
@@ -33,4 +33,5 @@
 
 {{!-- Scripts --}}
 <script src="/socket.io/socket.io.js" async></script>
-<script type="text/javascript" src='/js/homePage.min.js' async></script>
+{{!-- <script type="text/javascript" src='/js/homePage.min.js' async></script> --}}
+<script type="text/javascript" src='/js/bundle.min.js' async></script>
