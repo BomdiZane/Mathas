@@ -1,5 +1,4 @@
 const gulp = require('gulp'),
-	  jshint = require('gulp-jshint'),
 	  uglify = require('gulp-uglify-es').default,
 	  sourcemaps = require('gulp-sourcemaps'),
 	  babel = require('gulp-babel'),
@@ -12,8 +11,7 @@ const gulp = require('gulp'),
 	  livereload = require('gulp-livereload'),
 	  nodemon = require('gulp-nodemon');
 
-const hintSrc = ['*.js', 'public/lib/*.js', 'tests/*.js', 'app/**/*.js', 'config/*.js'],
-	testSrc = 'tests/*.js',
+const testSrc = 'tests/*.js',
 	jsSrc = 'public/lib/*.js',
 	jsDest = 'public/js/',
 	sassSrc = 'public/sass/*.scss',
@@ -27,14 +25,6 @@ gulp.task('clean:js', function() {
 // Clean CSS build
 gulp.task('clean:css', function() {
 	return del([sassDest]);	
-});
-
-// JS Hint
-gulp.task('hint', function() {
-	return gulp.src(hintSrc)
-	  	// .pipe(changed(hintSrc)) 
-	  	.pipe(jshint())
-    	.pipe(jshint.reporter('default'));
 });
 
 // Test - Mocha
@@ -65,7 +55,7 @@ gulp.task('sass', ['clean:css'], function() {
 });
 
 // Nodemon
-gulp.task('server', ['hint', 'sass', 'uglify'], function(){  
+gulp.task('server', ['sass', 'uglify'], function(){  
     nodemon({
 			script: 'server.js',
 			watch: ['app/**/*.*', 'server.js'],
@@ -80,9 +70,8 @@ gulp.task('server', ['hint', 'sass', 'uglify'], function(){
 // Watch
 gulp.task('watch', function () {
 	livereload.listen();
-	gulp.watch(['*.js', 'app/**/*.js', 'config/*.js'], ['hint']);
-	gulp.watch('public/lib/*.js', ['hint', 'uglify']);
-	gulp.watch('tests/*.js', ['hint', 'test']);
+	gulp.watch('public/lib/*.js', ['uglify']);
+	gulp.watch('tests/*.js', ['test']);
 	gulp.watch('public/sass/*.scss', ['sass']);
 });
 

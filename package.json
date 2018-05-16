@@ -47,10 +47,10 @@
   },
   "devDependencies": {
     "babel": "^6.23.0",
-    "babel-loader": "^7.1.4",
     "babel-cli": "^6.26.0",
     "babel-core": "*",
     "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.1.4",
     "babel-preset-env": "*",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
@@ -61,7 +61,6 @@
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-changed": "*",
-    "gulp-jshint": "*",
     "gulp-livereload": "*",
     "gulp-mocha": "*",
     "gulp-nodemon": "*",
@@ -70,7 +69,6 @@
     "gulp-sourcemaps": "*",
     "gulp-uglify-es": "*",
     "gulp-uglifycss": "*",
-    "jshint": "*",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3"
   }

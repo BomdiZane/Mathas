@@ -1,8 +1,8 @@
-# NODE BOILERPLATE
+# Mathas
 
-Boilerplate for NodeJS applications
+Multiplayer math game with websockets
 
-### FIRST RUN
+### First Run
 
 ```javascript
 // Install dependencies
