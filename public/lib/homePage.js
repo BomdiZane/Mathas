@@ -20,8 +20,6 @@ function initialize() {
 		else if(element.id === 'yesButton') sock.handleAnswer('yes');
 		else if(element.id === 'noButton') sock.handleAnswer('no');
 	});
-	
-	// Other Listeners
 
 	// Set Default States/Values
 	I('copy').appendChild(document.createTextNode(' - '+new Date().getFullYear()));
@@ -35,37 +33,90 @@ function SocketIO() {
 
 	let socket = io(),
 		utils = new Utils(),
-		currentResult;
+		currentResult,
+		correctAnswer = false,
+		roundClosed = false,
+		waitInterval,
+		roundInterval;
 
 	socket.on('connection', utils.success('Welcome'));
 	socket.on('question', payload => handleQuestion(payload));
+	socket.on('round closed', payload => handleRoundClosed(payload));
 	socket.on('player update', payload => I('numPlayers').textContent = `Players: ${payload}`);
 	
+	// Update UI with new question
 	function handleQuestion(payload)
 	{
-		currentResult = payload.result;
+		let count = 10; // Each round last for 10 seconds
 
-		I('textPad').textContent = `${payload.operand1} ${payload.operand2}  ${payload.operator} = ${payload.answer}`;
-		I('questionCard').lastChild.style.display = 'flex';
+		clearInterval(waitInterval);
+		roundClosed = false;
+		correctAnswer = false;
+		currentResult = payload.result;
+		I('timer').textContent = count--;
+
+		// Show a countdown of the game time (10s)
+		roundInterval = setInterval(() => {
+			if (count === 0) return clearInterval(roundInterval);
+			I('timer').textContent = count--;
+		}, 1000);
+
+		// Display the question and response buttons
+		I('textPad').textContent = `${payload.operand1} ${payload.operator}  ${payload.operand2} = ${payload.answer}`;
+		I('buttonHolder').style.display = 'flex';
+	}
+	
+	// Update UI when round ends
+	function handleRoundClosed(payload)
+	{
+		if (correctAnswer) utils.success('correct :)');
+		else utils.warn('Round closed!');
+		waitForNextRound();
 	}
 
+	// Handle players response
 	function handleAnswer(answer)
 	{
+		// If the round has ended, notify the player and do nothing else
+		if (roundClosed) return utils.warn('This round is closed!');
+
 		let oldScore = Number(I('score').textContent.split(':')[1].trim()),
 			newScore;
-		
+			
+		// Update player's score on UI base on his/her response
 		if (answer === currentResult){
-			newScore = oldScore++;
-			success('correct :)');
+			newScore = ++oldScore;
+			// If player's response is correct, notify the server so that
+			// next round can begin
+			socket.emit('answer', answer);
+			correctAnswer = true;
 		}
 		else{
-			newScore = oldScore--;
-			failure('wrong :(');
+			newScore = oldScore > 0 ? --oldScore : 0;
+			utils.failure('wrong :(');
+			resetView();
 		}
 
-		I('questionCard').lastChild.style.display = 'none';
 		I('score').textContent = `Score: ${newScore}`;
+	}
+
+	function waitForNextRound() {
+		let count = 5; // Delay of 5 seconds between rounds
+
+		clearInterval(roundInterval);
+		roundClosed = true;
+		I('timer').textContent = count--;
+		resetView();
+
+		waitInterval = setInterval(() => {
+			if (count === 0) return clearInterval(waitInterval);
+			I('timer').textContent = count--;
+		}, 1000);
+	}
+
+	function resetView() {
 		I('textPad').textContent = 'Wait for next round...';
+		I('buttonHolder').style.display = 'none';
 	}
 	
 	return {
@@ -73,6 +124,8 @@ function SocketIO() {
 	};
 }
 
+// For normal http routing
+// Just part of my boilerplate (NOT needed for this task)
 function Router() {
 	'use strict';
 
