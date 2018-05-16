@@ -1,0 +1,61 @@
+.inputDiv{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	.inlineInputDiv{
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+}
+.field{
+	width: 100%;
+	margin-bottom: 10px;
+	@include border-radius($defaultRadius);
+	padding: 8px;
+	text-align: center;
+	border-left: 4px solid lightgreen;
+	
+	&:disabled{
+		box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+		background-color: unset;
+	}
+	&:invalid{
+		box-shadow: none;
+		border-left: 4px solid rgb(250, 86, 86);
+	}
+	&:hover{ border-left: 8px solid lightgreen; }
+	&:invalid:hover{ border-left: 8px solid rgb(250, 86, 86); }
+	&:disabled:hover{ border-left: none; }
+	&:focus{ box-shadow: 0 0 15px 10px lightgreen inset; }
+	&:invalid:focus{ box-shadow: 0 0 15px 10px rgb(250, 86, 86) inset; }
+}
+.inlineInputDiv .field{ width: 49%; }
+.half,label{ width: 50%; }
+.first{ margin-top: 50px; }
+label{
+	font-size: 90%;
+	color: #555;
+}
+
+textarea{
+	width: 100%;
+	height: 20vh;
+	margin-bottom: 10px;
+	@include border-radius($defaultRadius);
+	border: 1px solid #ddd;
+	border-left: 4px solid lightgreen;
+	overflow-y: auto;
+	padding: 12px;
+	resize: none;
+	&:hover{ border-left: 8px solid lightgreen; }
+	&:invalid{
+		box-shadow: none;
+		border-left: 4px solid rgb(250, 86, 86);
+	}
+	&:invalid:hover{ border-left: 8px solid rgb(250, 86, 86); }
+}

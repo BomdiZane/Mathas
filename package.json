@@ -1,0 +1,65 @@
+{
+  "name": "mathas",
+  "version": "1.0.0",
+  "description": "Multiplayer math game",
+  "keywords": [
+    "Math",
+    "game"
+  ],
+  "author": "Bomdi Zane <dzedock@yahoo.com> (https://bomdizane.azurewebsites.net)",
+  "contributors": [],
+  "engines": {
+    "node": ">=8.11.0",
+    "npm": ">=5.6.0"
+  },
+  "scripts": {
+    "test": "gulp test",
+    "serve": "nodemon server.js",
+    "build": "gulp"
+  },
+  "license": "ISC",
+  "repository": {},
+  "homepage": "https://homepage.com",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "*",
+    "compression": "*",
+    "cookie-parser": "*",
+    "del": "*",
+    "express": "*",
+    "express-handlebars": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "glob": "*",
+    "helmet": "*",
+    "method-override": "*",
+    "morgan": "*",
+    "mysql": "*",
+    "passport": "*",
+    "prettyjson": "*",
+    "serve-favicon": "*",
+    "socket.io": "^2.1.0",
+    "ws": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-preset-env": "*",
+    "chai": "*",
+    "debug": "*",
+    "gulp": "*",
+    "gulp-babel": "*",
+    "gulp-changed": "*",
+    "gulp-jshint": "*",
+    "gulp-livereload": "*",
+    "gulp-mocha": "*",
+    "gulp-nodemon": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-uglify-es": "*",
+    "gulp-uglifycss": "*",
+    "jshint": "*",
+    "webpack": "^4.8.3"
+  }
+}

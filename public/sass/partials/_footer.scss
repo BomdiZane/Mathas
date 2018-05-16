@@ -1,0 +1,58 @@
+footer{
+	position: relative;
+	width: 100vw;
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	padding: 25px 35px;
+	margin-top: 20px;
+	box-shadow: 0 4px 12px 0 rgba(0,0,0,0.6);
+	background-color: $primaryBlue;
+
+	#subscribeDiv{
+		width: 35%;
+		min-width: 280px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		
+		#subscribeButton{
+			@include border-radius(50px);
+			height: unset;
+			padding: 8px 20px;
+			font: 100% Raleway;
+			cursor: pointer;
+			color: $bzWhite;
+			background-color: $bzGreen;
+			box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+			&:hover{ background-color: $bzRed; }
+			margin: 30px 0;
+		}
+	}
+	#scrollToTop{
+		position: absolute;
+		right: 80px;
+		bottom: 100%;
+		padding: 2px 10px;
+		color: white;
+		cursor: pointer;
+		transform: rotateZ(270deg);
+		background-color: $primaryBlue;
+		@include border-radius(0 20px 20px 0);
+		z-index: 1000;
+		
+		&:hover{ color: $bzRed; }
+	}
+	#copy{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		font-size: 80%;
+		text-align: center;
+		color: grey;
+		background-color: $secondaryBlack;
+	}
+}

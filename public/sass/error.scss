@@ -1,0 +1,21 @@
+@import 'partials/template';
+@import 'partials/header';
+@import 'partials/forms';
+@import 'partials/socialIcons';
+
+body{
+    background-image: unset;
+	background-color: $primaryBlack;
+}
+
+h1{
+    margin-top: 9%;
+    width: 80vw;
+}
+
+#errorMessage{
+    width: 80vw;
+    font-family: Raleway;
+    line-height: 1.5em;
+    color: $bzWhite;
+}

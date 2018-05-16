@@ -1,0 +1,132 @@
+@import 'partials/template';
+@import 'partials/header';
+@import 'partials/buttons';
+@import 'partials/forms';
+@import 'partials/socialIcons';
+@import 'partials/footer';
+
+/*Sign In Main*/
+#loggedInUser,#signInDiv{
+	position: absolute;
+	top: 10px;
+	right: 4vw;
+	display: none;
+	margin: 0;
+	z-index: 20000;
+}
+#signInDiv{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	&:hover #signInButtons{	display: flex; }
+	
+	#signInMain{
+		@include border-radius(50px);
+		padding: 6px 20px;
+		font: 100% Raleway;
+		text-align: center;
+		color: rgb(180, 105, 105);
+		background-color: white;
+		cursor: pointer;
+		box-shadow: 0 0 8px 0 rgba(0,0,0,0.3);
+	}
+	#signInButtons{
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		@include border-radius(2px);
+		background-color: $bzWhite;
+		box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+		margin-top: 10px;
+		position: absolute;
+		top: 100%;
+		padding: 5px 25px;
+
+		&::before{
+			content: " ";
+		   	position: absolute;
+		   	bottom: 100%;
+		   	border-width: 10px;
+		   	border-style: solid;
+		   	border-color: transparent transparent $bzWhite transparent;
+		}
+		p{
+			font: 90% Raleway;
+			color: rgb(180, 105, 105);
+		}
+		button{	margin: 5px 0; }
+	}
+}
+
+// Main Section
+section{
+	>div{
+		min-width: 250px;
+		@include border-radius($defaultRadius);
+		box-shadow: $defaultShadow;
+		background-color: lavenderblush;
+		padding: 10px;
+		margin: 2px 0;
+
+		&:first-of-type{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			span{
+				font: 90% Lato;
+				cursor: default;
+			}
+		}
+	}
+
+	// Timer Span
+	#timer{
+		width: 50px;
+		height: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: default;
+		background-color: rgb(243, 97, 97);
+		font: 150% Roboto;
+		text-align: center;
+		@include border-radius(50%);
+		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.05);
+	}
+
+	// Question Card
+	#questionCard{
+		min-width: 250px;
+		height: 250px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+		background-color: azure;
+	
+		#textPad{
+			width: 100%;
+			margin: 10px 0;
+			font: 150% Roboto;
+			text-align: center;
+		}
+		div{
+			width: 100%;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+	
+			#yesButton{
+				background-color: $bzGreen;
+				&:hover { background-color: lightgreen; }
+			}
+			#noButton{
+				background-color: $bzRed;
+				&:hover { background-color: lightcoral; }
+			}
+		}
+	}
+}
