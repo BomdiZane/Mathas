@@ -1,8 +1,3 @@
-function textResponse(response, message) {
-    response.type('text/plain');
-    response.end(message);
-}
-
 function renderError(response){
     response.render('error', {
         title: 'Not Found - Bomdi Zane',
@@ -10,11 +5,6 @@ function renderError(response){
         message: 'Sorry, There has been a server error. Please try again soon. <br /> If this is the second time you are seeing this message, please contact our support at...',
         stylesheet: '/css/error.min.css'
     });
-}
-
-function handleError(msg, callback) {
-    console.error(msg);
-    callback('Error');
 }
 
 function sanitizeLimits(limits) {
@@ -33,8 +23,6 @@ function sanitizeLimits(limits) {
 }
 
 module.exports = {
-    textResponse,
     renderError,
-    handleError,
     sanitizeLimits
 };

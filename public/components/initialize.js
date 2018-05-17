@@ -90,7 +90,7 @@ function SocketIO(self) {
 		else{
 			newScore = self.state.score > 0 ? --self.state.score : 0;
 			utils.failure('wrong :(');
-			resetView();
+			resetView('Wait for next round...');
 		}
 
 		self.setState({ time: newScore });
@@ -102,7 +102,7 @@ function SocketIO(self) {
 		clearInterval(roundInterval);
 		roundClosed = true;
 		self.setState({ time: count-- });
-		resetView();
+		resetView('Next round starts in');
 
 		waitInterval = setInterval(() => {
 			if (count === 0) return clearInterval(waitInterval);
@@ -110,8 +110,8 @@ function SocketIO(self) {
 		}, 1000);
 	}
 
-	function resetView() {
-		self.setState({ text: 'Wait for next round...' });
+	function resetView(message) {
+		self.setState({ text: message });
 		I('buttonHolder').style.display = 'none';
 	}
 	

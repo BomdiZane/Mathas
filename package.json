@@ -42,8 +42,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "serve-favicon": "*",
-    "socket.io": "^2.1.0",
-    "ws": "*"
+    "socket.io": "^2.1.0"
   },
   "devDependencies": {
     "babel": "^6.23.0",
