@@ -102,7 +102,7 @@ function SocketIO(self) {
 		clearInterval(roundInterval);
 		roundClosed = true;
 		self.setState({ time: count-- });
-		resetView('Next round starts in');
+		resetView('Round starts in');
 
 		waitInterval = setInterval(() => {
 			if (count === 0) return clearInterval(waitInterval);
