@@ -69,6 +69,8 @@
     "gulp-sourcemaps": "*",
     "gulp-uglify-es": "*",
     "gulp-uglifycss": "*",
+    "prop-types": "^15.6.1",
+    "selenium-webdriver": "^4.0.0-alpha.1",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3"
   }
