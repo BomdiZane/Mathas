@@ -1,3 +1,5 @@
+import Utils, { I, T, C, N, Q, A } from '../lib/utils.js';
+
 function initialize(self) {
 	'use strict';
 

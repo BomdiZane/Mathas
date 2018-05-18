@@ -1,6 +1,5 @@
-function Utils() {
-	'use strict';
-
+export default function Utils() {
+	
     if (!this || !(this instanceof Utils)) return new Utils();
 
 	let statusP = I('statusP');
@@ -46,3 +45,10 @@ function Utils() {
 		noData
 	};
 }
+
+export function I(id){	return document.getElementById(id); }
+export function T(tagName){ return document.getElementsByTagName(tagName); }
+export function C(className){ return document.getElementsByClassName(className); }
+export function N(Name){ return document.getElementsByName(Name); }
+export function Q(Name){ return document.querySelector(Name); }
+export function A(Name){ return document.querySelectorAll(Name); }
