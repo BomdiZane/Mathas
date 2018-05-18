@@ -90,6 +90,7 @@ function SocketIO(self) {
 			correctAnswer = true;
 		}
 		else{
+			// The player's score should not be less than zero
 			newScore = self.state.score > 0 ? --self.state.score : 0;
 			utils.failure('wrong :(');
 			resetView('Wait for next round...');

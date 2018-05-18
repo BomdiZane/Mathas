@@ -13,7 +13,9 @@
     "npm": ">=5.6.0"
   },
   "scripts": {
+    "start": "webpack -wd && gulp",
     "test": "gulp test",
+    "test:auto": "node ./tests/auto/homePageUITest.js",
     "serve": "nodemon server.js",
     "build": "gulp",
     "dev": "webpack -wd",

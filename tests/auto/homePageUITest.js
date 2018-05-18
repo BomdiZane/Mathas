@@ -1,8 +1,8 @@
 const {Builder, By, Key, until} = require('selenium-webdriver'),
-    assert = require('assert');
+    assert = require('chai').assert;
 
 (async function testButtonVisibilityTogglesBetweenRounds() {
-    let driver = await new Builder().forBrowser('firefox').build(),
+    let driver = await new Builder().forBrowser('chrome').build(),
         waitMessage = 'Wait for next round...',
         roundStartMessage = 'Round starts in',
         timerMaxVal = '10';
@@ -22,24 +22,56 @@ const {Builder, By, Key, until} = require('selenium-webdriver'),
         ])
         .then(results => results);
 
-        // Test that buttons are hidden when rounds are closed
+        //Assert that buttons are hidden by default
+        assert.equal(await buttonHolder.isDisplayed(), false,
+            'Buttons are not hidden by default!');
+
+        // Assert that numPlayers is updated
+        assert.notEqual(await numPlayers.getText(), 'Players: 0',
+            'numPlayers is not updated!');
+
+        // Assert that buttons are hidden when rounds are closed
         await driver.wait(until.elementTextIs(textPad, roundStartMessage), 60000);
-        assert.equal(await buttonHolder.isDisplayed(), false);
+        assert.equal(await buttonHolder.isDisplayed(), false, 
+            'Buttons are not hidden when rounds close!');
         
-        // Test that buttons are visible during rounds
+        // Assert that buttons are visible during rounds
         await driver.wait(until.elementTextIs(timer, timerMaxVal), 60000);
-        assert.equal(await buttonHolder.isDisplayed(), true);
+        assert.equal(await buttonHolder.isDisplayed(), true, 
+            'Buttons are not visible during rounds!');
         
-        // Test that buttons are hidden after click and wait message is displayed
-        // Test yesButton
+        // Assert that buttons are hidden, score is updated and wait 
+        // message is displayed after 'yesButton' clicks
+        let scoreText = await score.getText();
+        let currentScore = Number(scoreText.split(':')[1].trim());
         await driver.wait(until.elementIsVisible(yesButton), 60000).click();
-        assert.equal(await buttonHolder.isDisplayed(), false);
-        assert.equal(await textPad.getText(), waitMessage);
-        // Test noButton
+        assert.equal(await buttonHolder.isDisplayed(), false, 
+            'Buttons are not hidden after \'yesButton\' clicks!');
+        assert.oneOf(await textPad.getText(), [waitMessage, roundStartMessage], 
+            'Wait message is not displayed after \'yesButton\' clicks!');
+        if (currentScore === 0)
+            assert.oneOf(await score.getText(), ['Score: 0', 'Score: 1'], 
+            'Score is not updated after \'yesButton\' clicks!');
+        else assert.oneOf(await score.getText(), 
+            [`Score: ${currentScore + 1}`, `Score: ${currentScore - 1}`], 
+            'Score is not updated after \'yesButton\' clicks!');
+
+        // Assert that buttons are hidden, score is updated and wait 
+        // message is displayed after 'noButton' clicks
+        scoreText = await score.getText();
+        currentScore = Number(scoreText.split(':')[1].trim());
         await driver.wait(until.elementIsVisible(noButton), 60000).click();
-        assert.equal(await buttonHolder.isDisplayed(), false);
-        assert.equal(await textPad.getText(), waitMessage);
-    } 
-    catch(e){ console.error(e); }
+        assert.equal(await buttonHolder.isDisplayed(), false, 
+            'Buttons are not hidden after \'noButton\' clicks!');
+        assert.oneOf(await textPad.getText(), [waitMessage, roundStartMessage], 
+            'Wait message is not displayed after \'noButton\' clicks!');
+        if (currentScore === 0)
+            assert.oneOf(await score.getText(), ['Score: 0', 'Score: 1'], 
+            'Score is not updated after \'yesButton\' clicks!');
+        else assert.oneOf(await score.getText(), 
+            [`Score: ${currentScore + 1}`, `Score: ${currentScore - 1}`], 
+            'Score is not updated after \'yesButton\' clicks!');
+    }
+    catch(e) { console.error(e); }
     finally { await driver.quit(); }
 })();
