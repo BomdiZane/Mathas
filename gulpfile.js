@@ -5,25 +5,37 @@ const gulp = require('gulp'),
 	  mocha = require('gulp-mocha'),
 	  del = require('del'),
 	  livereload = require('gulp-livereload'),
-	  nodemon = require('gulp-nodemon');
+	  nodemon = require('gulp-nodemon'),
+	  webpack = require('webpack'),
+	  webpack_stream = require('webpack-stream'),
+	  webpack_config = require('./webpack.config.js');
 
 const testSrc = 'tests/*.js',
+	webpackSrc = 'public/components/*.js',
+	webpackDest = 'public/js/',
 	sassSrc = 'public/sass/*.scss',
 	sassDest = 'public/css/';
 
 // Clean CSS build
-gulp.task('clean:css', function() {
+gulp.task('clean:css', () => {
 	return del([sassDest]);	
 });
 
 // Test - Mocha
-gulp.task('test', function(){
+gulp.task('test', () => {
   	return gulp.src(testSrc, {read: false})
 	 	.pipe(mocha({reporter: 'list',ui: 'tdd'}));
 });
 
+// Bundle - Webpack
+gulp.task('webpack', () => {
+	return webpack_stream(webpack_config, webpack)
+		.pipe(gulp.dest(webpackDest))
+		.pipe(livereload());
+});
+
 // Sass
-gulp.task('sass', ['clean:css'], function() {
+gulp.task('sass', ['clean:css'], () => {
    	return gulp.src(sassSrc)
       	.pipe(sass().on('error', sass.logError))
       	.pipe(uglifycss())
@@ -33,23 +45,23 @@ gulp.task('sass', ['clean:css'], function() {
 });
 
 // Nodemon
-gulp.task('server', ['sass'], function(){  
+gulp.task('server', ['sass', 'webpack'], () => {  
     nodemon({
-			script: 'server.js',
-			watch: ['app/**/*.*', 'server.js'],
-			ext: 'js hbs'
-		})
-		.on('restart',function(){  
-			gulp.src('server.js')
-				.pipe(livereload());
-		});
+		script: 'server.js',
+		watch: ['app/**/*.*', 'server.js'],
+		ext: 'js hbs'
+	})
+	.on('restart',() => {  
+		gulp.src('server.js').pipe(livereload());
+	});
 });
 
 // Watch
-gulp.task('watch', function () {
+gulp.task('watch', () => {
 	livereload.listen();
-	gulp.watch('tests/*.js', ['test']);
-	gulp.watch('public/sass/*.scss', ['sass']);
+	gulp.watch(webpackSrc, ['webpack']);
+	gulp.watch(testSrc, ['test']);
+	gulp.watch(sassSrc, ['sass']);
 });
 
 gulp.task('default', ['watch', 'server']);
