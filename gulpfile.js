@@ -1,16 +1,16 @@
 const gulp = require('gulp'),
-	  rename = require('gulp-rename'),
-	  sass = require('gulp-sass'),
-	  uglifycss = require('gulp-uglifycss'),
-	  mocha = require('gulp-mocha'),
-	  del = require('del'),
-	  livereload = require('gulp-livereload'),
-	  nodemon = require('gulp-nodemon'),
-	  webpack = require('webpack'),
-	  webpack_stream = require('webpack-stream'),
-	  webpack_config = require('./webpack.config.js');
+	rename = require('gulp-rename'),
+	sass = require('gulp-sass'),
+	uglifycss = require('gulp-uglifycss'),
+	mocha = require('gulp-mocha'),
+	del = require('del'),
+	livereload = require('gulp-livereload'),
+	nodemon = require('gulp-nodemon'),
+	webpack = require('webpack'),
+	webpack_stream = require('webpack-stream'),
+	webpack_config = require('./webpack.config.js');
 
-const testSrc = 'tests/*.js',
+const testSrc = 'tests/unit/*.js',
 	webpackSrc = 'public/components/*.js',
 	webpackDest = 'public/js/',
 	sassSrc = 'public/sass/*.scss',
@@ -18,12 +18,12 @@ const testSrc = 'tests/*.js',
 
 // Clean CSS build
 gulp.task('clean:css', () => {
-	return del([sassDest]);	
+	return del([sassDest]);
 });
 
 // Test - Mocha
 gulp.task('test', () => {
-  	return gulp.src(testSrc, {read: false})
+  	return gulp.src(testSrc, { read: false })
 	 	.pipe(mocha({reporter: 'list',ui: 'tdd'}));
 });
 

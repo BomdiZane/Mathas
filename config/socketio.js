@@ -8,7 +8,7 @@ let result; // Are we expecting a 'yes' or 'no' answer? Per round.
 
 function getRandomNumber(max, min = 0) {
     if (!max || typeof(max) !== 'number' || typeof(min) !== 'number') return 0;
-    return Number((Math.random() * (max - min + 1) + min).toFixed(2));
+    return Number((Math.random() * (max - min) + min).toFixed(2));
 }
 
 function getRandomInt(max, min = 0){
@@ -35,14 +35,12 @@ function getFakeAnswer(operator) {
         case '*':
             answer = getRandomNumber(Math.pow(options.maxValue, 2), Math.pow(options.minValue, 2));
             break;
-        case '/':
-            answer = getRandomNumber(options.maxValue / options.minValue, options.minValue / options.maxValue);
+        default: answer = getRandomNumber(options.maxValue / options.minValue, options.minValue / options.maxValue);
             break;
-        default: console.log('Invalid operator fake: '+ operator);
     }
 
     result = 'no'; // Here we send the wrong answer so the correct response should be 'no'
-    return answer;
+    return parseFloat(answer);
 }
 
 function getRealAnswer(operand1, operand2, operator) {
@@ -52,12 +50,11 @@ function getRealAnswer(operand1, operand2, operator) {
         case '+': answer = operand1 + operand2; break;
         case '-': answer = operand1 - operand2; break;
         case '*': answer = operand1 * operand2; break;
-        case '/': answer = operand1 / operand2; break;
-        default: console.log('Invalid operator: '+ operator);
+        default: answer = operand1 / operand2; break;
     }
 
     result = 'yes'; // Here we send the correct answer so the correct response should be 'yes'
-    return answer.toFixed(2);
+    return parseFloat(answer.toFixed(2));
 }
 
 function createQuestion() {
@@ -143,4 +140,11 @@ function createConnection(http) {
     }
 }
 
-module.exports = createConnection;
+module.exports = {
+    getRandomNumber,
+    getRandomInt,
+    getFakeAnswer,
+    getRealAnswer,
+    createQuestion,
+    createConnection
+};

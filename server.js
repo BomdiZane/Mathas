@@ -14,7 +14,7 @@
         config = require('./config/credentials'),
         http = require('http').Server(app);
 
-    require('./config/socketio')(http);
+    require('./config/socketio').createConnection(http);
     http.listen(config.app.port, () => console.log(`Server started on port ${config.app.port}`));
 
     module.exports = require('./config/express')(app, config);
