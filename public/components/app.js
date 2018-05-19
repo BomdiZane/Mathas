@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import Status from './status';
+import Card from './card';
 import initialize from './initialize';
 
 class App extends Component{
@@ -13,25 +14,13 @@ class App extends Component{
         };
     }
 
-    componentDidMount(){
-        initialize(this);
-    }
+    componentDidMount(){ initialize(this); }
     
     render(){
         return (
             <Fragment>
-                <div>
-                    <span id="numPlayers">Players: {this.state.numberOfPlayers}</span>
-                    <span id="score">Score: {this.state.score}</span>
-                </div>
-                <div id="questionCard">
-                    <p id="textPad">{this.state.text}</p>
-                    <span id="timer">{this.state.time}</span>
-                    <div id="buttonHolder">
-                        <button id="yesButton">Yes</button>
-                        <button id="noButton">No</button>
-                    </div>
-                </div>
+                <Status numberOfPlayers={ this.state.numberOfPlayers } score={ this.state.score } />
+                <Card text={ this.state.text } time={ this.state.time } />
             </Fragment>
         );
     }
