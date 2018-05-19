@@ -28,7 +28,7 @@ gulp.task('test', () => {
 });
 
 // Bundle - Webpack
-gulp.task('webpack', () => {
+gulp.task('webpack', ['test'], () => {
 	return webpack_stream(webpack_config, webpack)
 		.pipe(gulp.dest(webpackDest))
 		.pipe(livereload());
@@ -45,7 +45,7 @@ gulp.task('sass', ['clean:css'], () => {
 });
 
 // Nodemon
-gulp.task('server', ['sass', 'webpack'], () => {  
+gulp.task('server', [ 'sass', 'webpack' ], () => {  
     nodemon({
 		script: 'server.js',
 		watch: ['app/**/*.*', 'server.js'],
