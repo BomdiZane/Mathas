@@ -27,7 +27,7 @@ describe('homePage.js:', function(){
 
             should.exist(randNum);
             randNum.should.be.a('number');
-            randNum.should.match(/^[0-9]{1,2}\.[0-9]{1,2}$/);
+            randNum.should.match(/^[0-9]{1,2}\.[0-9]{0,2}$/);
             randNum.should.be.least(min);
             randNum.should.be.most(max);
 
@@ -54,7 +54,7 @@ describe('homePage.js:', function(){
 
             should.exist(fakeNum);
             fakeNum.should.be.a('number');
-            fakeNum.should.match(/^[0-9]{1,2}\.[0-9]{1,2}$/);
+            fakeNum.should.match(/^[0-9]{1,2}\.[0-9]{0,2}$/);
             fakeNum.should.be.least(options.minValue / options.maxValue);
             fakeNum.should.be.most(options.maxValue / options.minValue);
 
