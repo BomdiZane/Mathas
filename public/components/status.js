@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-const Status = ({ numberOfPlayers, score }) => {
+const Status = ({ states }) => {
     return (
-        <div>
-            <span id="numPlayers">Players: { numberOfPlayers }</span>
-            <span id="score">Score: { score }</span>
-        </div>
+        <Fragment>
+            <span id="numPlayers">Players: { states.numberOfPlayers }</span>
+            <span id="score">Score: { states.score }</span>
+        </Fragment>
     );
 };
 
 Status.propTypes = {
-    numberOfPlayers: PropTypes.number.isRequired,
-    score: PropTypes.number.isRequired
+    states: PropTypes.object.isRequired,
 };
 
 export default Status;

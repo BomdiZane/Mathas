@@ -1,4 +1,5 @@
 import Utils, { I, T, C, N, Q, A } from '../lib/utils.js';
+import update from 'immutability-helper';
 
 function initialize(self) {
 	'use strict';
@@ -16,6 +17,15 @@ function initialize(self) {
 		});
 		else if(element.id === 'yesButton') sock.handleAnswer('yes');
 		else if(element.id === 'noButton') sock.handleAnswer('no');
+		else if(element.id === 'subscribeButton') utils.failure('nope...not yet :)');
+		else if(element.id === 'mainGoogleLogIn') utils.failure('nope...not yet :)');
+		else if(element.id === 'mainFacebookLogIn') utils.failure('nope...not yet :)');
+	});
+
+	// Other Listeners
+	[...A('.socialImage')].forEach(image => {
+		image.addEventListener('mouseenter', event => event.target.style.willChange = 'transform');
+		image.addEventListener('animationEnd', event => event.target.style.willChange = 'auto');
 	});
 
 	// Set Default States/Values
@@ -34,42 +44,44 @@ function SocketIO(self) {
 		correctAnswer = false,
 		roundClosed = false,
 		waitInterval,
-		roundInterval;
+		roundInterval,
+		round = 0;
 
 	socket.on('connection', utils.success('Welcome'));
 	socket.on('question', payload => handleQuestion(payload));
 	socket.on('round closed', payload => handleRoundClosed(payload));
-	socket.on('player update', payload => self.setState({ numberOfPlayers: payload }));
+	socket.on('player update',
+		payload => self.setState(update(self.state, { main: {status: {numberOfPlayers: {$set: payload}}}})
+	));
 	
 	// Update UI with new question
 	function handleQuestion(payload)
 	{
 		let count = 10; // Each round last for 10 seconds
-
+		
+		round++;
 		clearInterval(waitInterval);
 		roundClosed = false;
 		correctAnswer = false;
 		currentResult = payload.result;
-		self.setState({ time: count-- });
+		self.setState(update(self.state, {	main: {game: {time: {$set: count-- }}}}));
 
 		// Show a countdown of the game time (10s)
 		roundInterval = setInterval(() => {
 			if (count === 0) return clearInterval(roundInterval);
-			self.setState({	time: count-- });
+			self.setState(update(self.state, {	main: {game: {time: {$set: count-- }}}}));
 		}, 1000);
 
 		// Display the question and response buttons
-		self.setState({
-			text: `${payload.operand1} ${payload.operator}  ${payload.operand2} = ${payload.answer}`
-		});
+		self.setState(update(self.state, {	main: {game: {text: {$set: 
+			`${payload.operand1} ${payload.operator}  ${payload.operand2} = ${payload.answer}` }}}}));
 		I('buttonHolder').style.display = 'flex';
 	}
 	
 	// Update UI when round ends
 	function handleRoundClosed(payload)
 	{
-		if (correctAnswer) utils.success('correct :)');
-		else utils.warn('Round closed!');
+		if (!correctAnswer) utils.warn('Round closed!');
 		waitForNextRound();
 	}
 
@@ -78,25 +90,29 @@ function SocketIO(self) {
 	{
 		// If the round has ended, notify the player and do nothing else
 		if (roundClosed) return utils.warn('This round is closed!');
-
-		let newScore;
 			
+		let resultState = { round: round };
 		// Update player's score on UI base on his/her response
 		if (answer === currentResult){
-			newScore = ++self.state.score;
+			self.setState(update(self.state, { main: {status: {score: {$apply: x => x + 1 }}}}));
 			// If player's response is correct, notify the server so that
 			// next round can begin
 			socket.emit('answer', answer);
 			correctAnswer = true;
+			resultState.answer = 'correct';
+			resultState.result = '+1';
 		}
 		else{
 			// The player's score should not be less than zero
-			newScore = self.state.score > 0 ? --self.state.score : 0;
-			utils.failure('wrong :(');
-			resetView('Wait for next round...');
-		}
+			if (self.state.main.status.score > 0) 
+				self.setState(update(self.state, { main: {status: {score: {$apply: x => x - 1 }}}}));
 
-		self.setState({ time: newScore });
+			resetView('Wait for next round...');
+			resultState.answer = 'wrong';
+			resultState.result = '-1';
+		}
+		
+		self.setState(update(self.state, { results: {content: {$push: [resultState] }}}));
 	}
 
 	function waitForNextRound() {
@@ -104,17 +120,17 @@ function SocketIO(self) {
 
 		clearInterval(roundInterval);
 		roundClosed = true;
-		self.setState({ time: count-- });
+		self.setState(update(self.state, {	main: {game: {time: {$set: count-- }}}}));
 		resetView('Round starts in');
 
 		waitInterval = setInterval(() => {
 			if (count === 0) return clearInterval(waitInterval);
-			self.setState({	time: count-- });
+			self.setState(update(self.state, {	main: {game: {time: {$set: count-- }}}}));
 		}, 1000);
 	}
 
 	function resetView(message) {
-		self.setState({ text: message });
+		self.setState(update(self.state, {	main: {game: {text: {$set: message }}}}));
 		I('buttonHolder').style.display = 'none';
 	}
 	

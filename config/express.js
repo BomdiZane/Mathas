@@ -1,23 +1,15 @@
 const express  = require('express'),
       path  = require('path'),
-      // bcrypt  = require('bcrypt'),
-      passport  = require('passport'),
       helmet  = require('helmet'),
       hbs = require('express-handlebars'),
-      // expressSession = require('express-session'),
-      bodyParser = require('body-parser'),
-      cookieParser = require('cookie-parser'),
-      expressValidator = require('express-validator'),
       favicon = require('serve-favicon'),
       logger = require('morgan'),
-      glob = require('glob'),
-      compress = require('compression'),
-      methodOverride = require('method-override');
+      glob = require('glob');
 
 
 module.exports = (app, config) => {
 
-  const renderError = require(path.normalize(`${config.root}/utils/bsUtils`)).renderError;
+  const { renderError } = require(path.normalize(`${config.root}/utils/bsUtils`));
   app.locals.devEnv = config.envName == 'development';
 
   app.engine('hbs', hbs({
@@ -33,22 +25,7 @@ module.exports = (app, config) => {
   app.use(helmet());
   app.use(favicon(path.normalize(`${config.root}/public/files/favicon.ico`)));
   app.use(logger('dev'));
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
-  app.use(cookieParser(config.security.cookieSecret));
-  app.use(compress());
   app.use(express.static(path.normalize(`${config.root}/public`)));
-  app.use(methodOverride());
-  app.use(expressValidator());
-  // app.use(expressSession({
-  //   secret: config.security.sessionSecret,
-  //   saveUninitialized: false,
-  //   resave: false
-  // })); //NB...Memory session storage is not recommended for production
-  app.use(passport.initialize());
-  app.use(passport.session());
   app.use((req, res, next) => {
     res.locals.showTests = app.locals.devEnv && req.query.test === '1';
     next();

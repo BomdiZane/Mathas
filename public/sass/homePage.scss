@@ -60,26 +60,37 @@
 	}
 }
 
-// Main Section
-section{
-	>div{
-		min-width: 250px;
-		@include border-radius($defaultRadius);
-		box-shadow: $defaultShadow;
-		background-color: lavenderblush;
-		padding: 10px;
-		margin: 2px 0;
+.title{
+	text-align: center;
+	background-color: rgb(79, 143, 165);
+	color: $primaryGrey;
+	font: 90% Lato;
+	cursor: default;
+}
 
-		&:first-of-type{
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
+.content{
+	min-height: 250px;
+	max-height: 320px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	overflow-y: auto;
+	box-shadow: $defaultShadow;
+}
 
-			span{
-				font: 90% Lato;
-				cursor: default;
-			}
-		}
+// Main
+#main{
+	#buttonHolder{
+		display: none;
+		justify-content: space-around;
+		align-items: center;
+		background-color: lightblue;
+
+		// button{ will-change: border-radius; }
+		button:hover{ @include border-radius(20px); }
+		#yesButton{	background-color: $bzGreen;	}
+		#noButton{ background-color: $bzRed; }
 	}
 
 	// Timer Span
@@ -90,43 +101,59 @@ section{
 		justify-content: center;
 		align-items: center;
 		cursor: default;
-		background-color: rgb(243, 97, 97);
+		background-color: $primaryBlack;
+		color: $bzWhite;
 		font: 150% Roboto;
 		text-align: center;
 		@include border-radius(50%);
 		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.05);
 	}
 
-	// Question Card
-	#questionCard{
-		min-width: 250px;
-		height: 250px;
+	.title{
 		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
+		justify-content: space-between;
 		align-items: center;
-		background-color: azure;
-	
+	}
+	.content{
+		background-color: lightblue;
+		justify-content: space-around;
+
 		#textPad{
 			width: 100%;
 			margin: 10px 0;
 			font: 150% Roboto;
 			text-align: center;
 		}
-		div{
-			width: 100%;
-			display: none;
-			justify-content: space-around;
-			align-items: center;
-	
-			#yesButton{
-				background-color: $bzGreen;
-				&:hover { background-color: lightgreen; }
-			}
-			#noButton{
-				background-color: $bzRed;
-				&:hover { background-color: lightcoral; }
-			}
-		}
 	}
+}
+
+// Rules
+#rules{
+	.content{ background-color: lavender; }
+	li{ font: 90%/1.4em Roboto; }
+}
+
+// results
+#results{
+	.content{
+		box-shadow: unset;
+		padding: 0;
+	}
+	.resultCard{
+		width: 100%;
+		box-shadow: $defaultShadow;
+		@include border-radius($defaultRadius);
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin: 5px 0;
+		padding: 5px;
+		min-height: 30px;
+
+		span{ font: 90%/1.4em Roboto; }
+	}
+	.correct{ background-color: lightgreen; }
+	.wrong{ background-color: lightcoral; }
+	.none{ background-color: grey; }
 }

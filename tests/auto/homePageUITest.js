@@ -2,7 +2,7 @@ const {Builder, By, Key, until} = require('selenium-webdriver'),
     assert = require('chai').assert;
 
 (async function testButtonVisibilityTogglesBetweenRounds() {
-    let driver = await new Builder().forBrowser('chrome').build(),
+    let driver = await new Builder().forBrowser('firefox').build(),
         waitMessage = 'Wait for next round...',
         roundStartMessage = 'Round starts in',
         timerMaxVal = '10';
@@ -22,11 +22,7 @@ const {Builder, By, Key, until} = require('selenium-webdriver'),
         ])
         .then(results => results);
 
-        //Assert that buttons are hidden by default
-        assert.equal(await buttonHolder.isDisplayed(), false,
-            'Buttons are not hidden by default!');
-
-        // Assert that numPlayers is updated
+        // Assert that numPlayers is updated after connection is established
         assert.notEqual(await numPlayers.getText(), 'Players: 0',
             'numPlayers is not updated!');
 
@@ -40,15 +36,25 @@ const {Builder, By, Key, until} = require('selenium-webdriver'),
         assert.equal(await buttonHolder.isDisplayed(), true, 
             'Buttons are not visible during rounds!');
         
-        // Assert that buttons are hidden, score is updated and wait 
-        // message is displayed after 'yesButton' clicks
         let scoreText = await score.getText();
         let currentScore = Number(scoreText.split(':')[1].trim());
+        let oldResultCards = await driver.findElements(By.className('resultCard'));
         await driver.wait(until.elementIsVisible(yesButton), 60000).click();
+        let newResultCards = await driver.findElements(By.className('resultCard'));
+
+        // Assert that a result card is added after 'yesButton' clicks
+        assert.equal(newResultCards.length, oldResultCards.length + 1, 
+            'Result card is not added after \'yesButton\' clicks!');
+
+        // Assert that buttons are hidden after 'yesButton' clicks
         assert.equal(await buttonHolder.isDisplayed(), false, 
             'Buttons are not hidden after \'yesButton\' clicks!');
+        
+        // Assert that wait message is displayed after 'yesButton' clicks
         assert.oneOf(await textPad.getText(), [waitMessage, roundStartMessage], 
             'Wait message is not displayed after \'yesButton\' clicks!');
+
+        // Assert that score is updated after 'yesButton' clicks
         if (currentScore === 0)
             assert.oneOf(await score.getText(), ['Score: 0', 'Score: 1'], 
             'Score is not updated after \'yesButton\' clicks!');
@@ -56,15 +62,25 @@ const {Builder, By, Key, until} = require('selenium-webdriver'),
             [`Score: ${currentScore + 1}`, `Score: ${currentScore - 1}`], 
             'Score is not updated after \'yesButton\' clicks!');
 
-        // Assert that buttons are hidden, score is updated and wait 
-        // message is displayed after 'noButton' clicks
         scoreText = await score.getText();
         currentScore = Number(scoreText.split(':')[1].trim());
+        oldResultCards = await driver.findElements(By.className('resultCard'));
         await driver.wait(until.elementIsVisible(noButton), 60000).click();
+        newResultCards = await driver.findElements(By.className('resultCard'));
+
+        // Assert that a result card is added after 'noButton' clicks
+        assert.equal(newResultCards.length, oldResultCards.length + 1, 
+            'Result card is not added after \'noButton\' clicks!');
+
+        // Assert that wait message is displayed after 'noButton' clicks
         assert.equal(await buttonHolder.isDisplayed(), false, 
             'Buttons are not hidden after \'noButton\' clicks!');
+        
+         // Assert that wait message is displayed after 'noButton' clicks
         assert.oneOf(await textPad.getText(), [waitMessage, roundStartMessage], 
             'Wait message is not displayed after \'noButton\' clicks!');
+
+        // Assert that score is updated after 'noButton' clicks
         if (currentScore === 0)
             assert.oneOf(await score.getText(), ['Score: 0', 'Score: 1'], 
             'Score is not updated after \'yesButton\' clicks!');
