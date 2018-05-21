@@ -1,3 +1,4 @@
+import  '../sass/homePage.scss';
 import Utils, { I, T, C, N, Q, A } from '../lib/utils.js';
 import update from 'immutability-helper';
 
@@ -10,7 +11,7 @@ function initialize(self) {
 	// Window Click Listeners
 	window.addEventListener('click', event => {
 		let element = event.target;
-		
+
 		if (element.id === 'scrollToTop') Q('header').scrollIntoView({
 			behavior:'smooth',
 			block: 'start'
@@ -30,7 +31,7 @@ function initialize(self) {
 
 	// Set Default States/Values
 	I('copy').appendChild(document.createTextNode(' - '+new Date().getFullYear()));
-	
+
 }
 
 function SocketIO(self) {
@@ -53,12 +54,12 @@ function SocketIO(self) {
 	socket.on('player update',
 		payload => self.setState(update(self.state, { main: {status: {numberOfPlayers: {$set: payload}}}})
 	));
-	
+
 	// Update UI with new question
 	function handleQuestion(payload)
 	{
 		let count = 10; // Each round last for 10 seconds
-		
+
 		round++;
 		clearInterval(waitInterval);
 		roundClosed = false;
@@ -73,11 +74,11 @@ function SocketIO(self) {
 		}, 1000);
 
 		// Display the question and response buttons
-		self.setState(update(self.state, {	main: {game: {text: {$set: 
+		self.setState(update(self.state, {	main: {game: {text: {$set:
 			`${payload.operand1} ${payload.operator}  ${payload.operand2} = ${payload.answer}` }}}}));
 		I('buttonHolder').style.display = 'flex';
 	}
-	
+
 	// Update UI when round ends
 	function handleRoundClosed(payload)
 	{
@@ -90,7 +91,7 @@ function SocketIO(self) {
 	{
 		// If the round has ended, notify the player and do nothing else
 		if (roundClosed) return utils.warn('This round is closed!');
-			
+
 		let resultState = { round: round };
 		// Update player's score on UI base on his/her response
 		if (answer === currentResult){
@@ -104,14 +105,14 @@ function SocketIO(self) {
 		}
 		else{
 			// The player's score should not be less than zero
-			if (self.state.main.status.score > 0) 
+			if (self.state.main.status.score > 0)
 				self.setState(update(self.state, { main: {status: {score: {$apply: x => x - 1 }}}}));
 
 			resetView('Wait for next round...');
 			resultState.answer = 'wrong';
 			resultState.result = '-1';
 		}
-		
+
 		self.setState(update(self.state, { results: {content: {$push: [resultState] }}}));
 	}
 
@@ -133,7 +134,7 @@ function SocketIO(self) {
 		self.setState(update(self.state, {	main: {game: {text: {$set: message }}}}));
 		I('buttonHolder').style.display = 'none';
 	}
-	
+
 	return {
 		handleAnswer
 	};

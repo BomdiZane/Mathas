@@ -4,8 +4,6 @@ Multiplayer math game with websockets
 
 ## First Run
 
-Use a node version less than or equal to 8.11.0 (preferably the LTS version) as gulp-sass has not been updated to support node v10 yet.
-
 ```javaScript
 // Install dependencies
 npm install
