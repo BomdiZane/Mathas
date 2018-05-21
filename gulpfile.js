@@ -1,6 +1,6 @@
 const gulp = require('gulp'),
 	rename = require('gulp-rename'),
-	// sass = require('gulp-sass'),
+	sass = require('gulp-sass'),
 	uglifycss = require('gulp-uglifycss'),
 	mocha = require('gulp-mocha'),
 	del = require('del'),
@@ -35,18 +35,18 @@ gulp.task('webpack', ['test'], () => {
 });
 
 // Sass
-// gulp.task('sass', ['clean:css'], () => {
-//    	return gulp.src(sassSrc)
-//       	.pipe(sass().on('error', sass.logError))
-//       	.pipe(uglifycss())
-// 		.pipe(rename({ suffix: '.min' }))
-// 		.pipe(gulp.dest(sassDest))
-// 		.pipe(livereload());
-// });
+gulp.task('sass', ['clean:css'], () => {
+   	return gulp.src(sassSrc)
+      	.pipe(sass().on('error', sass.logError))
+      	.pipe(uglifycss())
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest(sassDest))
+		.pipe(livereload());
+});
 
 // Nodemon
-// gulp.task('server', [ 'sass', 'webpack' ], () => {
-gulp.task('server', [ 'webpack' ], () => {
+gulp.task('server', [ 'sass', 'webpack' ], () => {
+// gulp.task('server', [ 'webpack' ], () => {
     nodemon({
 		script: 'server.js',
 		watch: ['app/**/*.*', 'server.js'],
@@ -62,7 +62,7 @@ gulp.task('watch', () => {
 	livereload.listen();
 	gulp.watch(webpackSrc, ['webpack']);
 	gulp.watch(testSrc, ['test']);
-	// gulp.watch(sassSrc, ['sass']);
+	gulp.watch(sassSrc, ['sass']);
 });
 
 gulp.task('default', ['watch', 'server']);
