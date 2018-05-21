@@ -131,6 +131,8 @@ const { Builder, By, until } = require('selenium-webdriver'),
             assert.include(newResultCardClass, 'correct',
             'Added result card has the incorrect class after \'noButton\' clicks when the answer is incorrect!');
         }
+
+        console.log('All good!\n');
     }
     catch(e) { console.error(e); }
     finally { await driver.quit(); }
