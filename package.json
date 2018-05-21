@@ -9,7 +9,7 @@
   "author": "Bomdi Zane <dzedock@yahoo.com> (https://bomdizane.azurewebsites.net)",
   "contributors": [],
   "engines": {
-    "node": ">=8.11.0",
+    "node": "<=8.11.0",
     "npm": ">=5.6.0"
   },
   "scripts": {
