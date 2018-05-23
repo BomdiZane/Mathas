@@ -63,7 +63,7 @@ function SocketIO(self) {
 		clearInterval(waitInterval);
 		roundClosed = false;
 		correctAnswer = false;
-		currentResult = payload.result;
+		currentResult = payload.expectedResponse;
 		self.setState(update(self.state, {	main: {game: {time: {$set: count-- }}}}));
 
 		// Show a countdown of the game time (10s)
