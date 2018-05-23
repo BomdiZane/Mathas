@@ -20,7 +20,7 @@
 	justify-content: flex-start;
 	align-items: center;
 	&:hover #signInButtons{	display: flex; }
-	
+
 	#signInMain{
 		@include border-radius(50px);
 		padding: 6px 20px;

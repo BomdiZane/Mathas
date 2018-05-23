@@ -73,7 +73,13 @@ function createConnection(http) {
 
     io.on('connection', socket => {
         io.emit('player update', ++numberOfConnections);
-        socket.on('answer', answer => { if (!roundIsClosed) closeRound(); });
+        socket.on('answer', answer => {
+            if (!roundIsClosed) {
+                socket.emit('answer accepted', 'true');
+                closeRound(socket);
+            }
+            else socket.emit('answer accepted', 'false');
+        });
         socket.on('disconnect', () => socket.broadcast.emit('player update', --numberOfConnections));
     });
 
@@ -100,9 +106,9 @@ function createConnection(http) {
         startIntervals();
     }
 
-    function closeRound() {
+    function closeRound(socket) {
         roundIsClosed = true;
-        io.emit('round closed', 'round closed');
+        socket ? socket.broadcast.emit('round closed', 'round closed') : io.emit('round closed', 'round closed');
     }
 }
 

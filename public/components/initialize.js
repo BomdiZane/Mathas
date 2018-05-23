@@ -43,7 +43,7 @@ function SocketIO(self) {
 		roundClosed = false,
 		waitInterval,
 		roundInterval,
-		round = 0;
+        round = 0;
 
 	socket.on('connection', utils.success('Welcome'));
 	socket.on('question', payload => handleQuestion(payload));
@@ -54,6 +54,21 @@ function SocketIO(self) {
 	socket.on('player update',
 		payload => self.setState(update(self.state, { main: {status: {numberOfPlayers: {$set: payload}}}})
 	));
+	socket.on('answer accepted', payload => {
+        // alert(payload);
+        waitForNextRound();
+        if (payload === 'true') {
+            let resultState = {
+                round : round,
+                answer : 'correct',
+                result : '+1',
+            };
+
+            self.setState(update(self.state, { main: {status: {score: {$apply: x => x + 1 }}}}));
+            self.setState(update(self.state, { results: {content: {$push: [resultState] }}}));
+        }
+        else utils.success('too late :)');
+    });
 
 	function handleQuestion(payload)
 	{
@@ -82,24 +97,23 @@ function SocketIO(self) {
 	{
 		if (roundClosed) return utils.warn('This round is closed!');
 
-        let resultState = { round: round };
-
 		if (answer === currentResult){
-			self.setState(update(self.state, { main: {status: {score: {$apply: x => x + 1 }}}}));
 			socket.emit('answer', answer);
 			correctAnswer = true;
-			resultState.answer = 'correct';
-			resultState.result = '+1';
 		}
 		else{
 			if (self.state.main.status.score > 0) // The player's score should not be less than zero
-				self.setState(update(self.state, { main: {status: {score: {$apply: x => x - 1 }}}}));
+                self.setState(update(self.state, { main: {status: {score: {$apply: x => x - 1 }}}}));
+
+            let resultState = {
+                round : round,
+                answer : 'wrong',
+                result : '-1',
+            };
 
 			resetView('Wait for next round...');
-			resultState.answer = 'wrong';
-			resultState.result = '-1';
+            self.setState(update(self.state, { results: {content: {$push: [resultState] }}}));
 		}
-		self.setState(update(self.state, { results: {content: {$push: [resultState] }}}));
 	}
 
 	function waitForNextRound() {
