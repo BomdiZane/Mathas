@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans|Indie+Flower|Raleway|Lato|Roboto);/*FONTS*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans|Indie+Flower|Raleway|Lato|Roboto);
+/*FONTS*/
 /*VARIABLES*/
 /*MIXINGS*/
 * {
@@ -604,3 +605,4 @@ footer {
 
 #results .none {
   background-color: grey; }
+

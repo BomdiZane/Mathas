@@ -22,7 +22,7 @@ describe('homePage.js:', function(){
         question = createQuestion();
 
 	describe('getRandomNumber()', function(){
-        it(`should return a number between ${min} and ${max} (boundaries inclusive)`, 
+        it(`should return a number between ${min} and ${max} (boundaries inclusive)`,
         function(done){
 
             should.exist(randNum);
@@ -46,7 +46,7 @@ describe('homePage.js:', function(){
             done();
         });
     });
-    
+
     // Test invoking getFakeAnswer() without operator
     describe('getFakeAnswer()', function(){
         it(`should return a number between ${options.minValue / options.maxValue} and ${options.maxValue / options.minValue} (boundaries inclusive)`,
@@ -78,9 +78,9 @@ describe('homePage.js:', function(){
 
             should.exist(question);
             question.should.be.an('object');
-            question.should.have.all.keys('operand1', 'operand2', 'operator', 'answer', 'result');
+            question.should.have.all.keys('operand1', 'operand2', 'operator', 'answer', 'expectedResponse');
             question.operator.should.be.oneOf(options.operators);
-            question.result.should.be.oneOf(['yes', 'no']);
+            question.expectedResponse.should.be.oneOf(['yes', 'no']);
             question.operand1.should.be.a('number');
             question.operand2.should.be.a('number');
             question.answer.should.be.a('number');

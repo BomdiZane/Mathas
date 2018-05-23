@@ -1,5 +1,7 @@
 const path = require('path'),
-    ETP = require('extract-text-webpack-plugin');
+    miniCssExtractPlugin = require('mini-css-extract-plugin'),
+    UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
+    OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -22,13 +24,26 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ETP.extract({
-                    use: ['css-loader', 'sass-loader']
-                })
+                use: [miniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
             },
         ]
     },
     plugins: [
-        new ETP('../css/bundle.css')
-    ]
+        new miniCssExtractPlugin({
+            filename: "../css/bundle.css"
+        })
+    ],
+    optimization: {
+        minimizer: [
+          new UglifyJsPlugin({
+            cache: true,
+            parallel: true,
+            sourceMap: true,
+            uglifyOptions: {
+                ecma: 6,
+            }
+          }),
+          new OptimizeCSSAssetsPlugin({})
+        ]
+      },
 };

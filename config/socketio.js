@@ -72,9 +72,9 @@ function createConnection(http) {
     startIntervals();
 
     io.on('connection', socket => {
-        io.emit('player update', numberOfConnections++);
+        io.emit('player update', ++numberOfConnections);
         socket.on('answer', answer => { if (!roundIsClosed) closeRound(); });
-        socket.on('disconnect', () => socket.broadcast.emit('player update', numberOfConnections--));
+        socket.on('disconnect', () => socket.broadcast.emit('player update', --numberOfConnections));
     });
 
     function startIntervals() {
