@@ -10,20 +10,17 @@ const testSrc = 'tests/unit/*.js',
 	webpackSrc = 'public/components/*.js',
 	webpackDest = 'public/js/';
 
-// Test - Mocha
 gulp.task('test', () => {
   	return gulp.src(testSrc, { read: false })
 	 	.pipe(mocha({reporter: 'list',ui: 'tdd'}));
 });
 
-// Bundle - Webpack
 gulp.task('webpack', ['test'], () => {
 	return webpack_stream(webpack_config, webpack)
 		.pipe(gulp.dest(webpackDest))
 		.pipe(livereload());
 });
 
-// Nodemon
 gulp.task('server', [ 'webpack' ], () => {
     nodemon({
 		script: 'server.js',
@@ -35,7 +32,6 @@ gulp.task('server', [ 'webpack' ], () => {
 	});
 });
 
-// Watch
 gulp.task('watch', () => {
 	livereload.listen();
 	gulp.watch(webpackSrc, ['webpack']);

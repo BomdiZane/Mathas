@@ -22,16 +22,13 @@ const { Builder, By, until } = require('selenium-webdriver'),
         ])
         .then(results => results);
 
-        // Assert that numPlayers is updated after connection is established
         assert.notEqual(await numPlayers.getText(), 'Players: 0',
             'numPlayers is not updated!');
 
-        // Assert that buttons are hidden when rounds are closed
         await driver.wait(until.elementTextIs(textPad, roundStartMessage), 60000);
         assert.equal(await buttonHolder.isDisplayed(), false,
             'Buttons are not hidden when rounds close!');
 
-        // Assert that buttons are visible during rounds
         await driver.wait(until.elementTextIs(timer, timerMaxVal), 60000);
         assert.equal(await buttonHolder.isDisplayed(), true,
             'Buttons are not visible during rounds!');
@@ -47,39 +44,26 @@ const { Builder, By, until } = require('selenium-webdriver'),
         let newResultCardLastChild = await driver.findElement(By.css('.resultCard:last-child'));
         let newResultCardClass = await newResultCardLastChild.getAttribute('class');
 
-        // Assert that a result card is added after 'yesButton' clicks
         assert.equal(newResultCards.length, oldResultCards.length + 1,
             'Result card is not added after \'yesButton\' clicks!');
-
-        // Assert that buttons are hidden after 'yesButton' clicks
         assert.equal(await buttonHolder.isDisplayed(), false,
             'Buttons are not hidden after \'yesButton\' clicks!');
-
-        // Assert that wait message is displayed after 'yesButton' clicks
         assert.oneOf(await textPad.getText(), [waitMessage, roundStartMessage],
             'Wait message is not displayed after \'yesButton\' clicks!');
 
-        // Assert that score and results are updated correctly after 'yesButton' clicks
         if (answer){
-            // Assert that score is incremented by 1
             assert.equal(await score.getText(), `Score: ${currentScore + 1}`,
             'Score is not incremented after \'yesButton\' clicks when the answer is correct!');
-
-            // Assert that the newly added result card has the 'correct' class
             assert.include(newResultCardClass, 'correct',
             'Added result card has the incorrect class after \'yesButton\' clicks when the answer is correct!');
         }
         else {
             if (currentScore === 0)
-                // Assert that score doesn't change
                 assert.equal(await score.getText(), `Score: ${currentScore}`,
                 'Score changes after \'yesButton\' clicks when the answer is wrong and the previous score was 0!');
             else
-                // Assert that score is decremented by 1
                 assert.equal(await score.getText(), `Score: ${currentScore - 1}`,
                 'Score is not decremented after \'yesButton\' clicks when the answer is wrong and the previous score was not 0!');
-
-            // Assert that the newly added result card has the 'wrong' class
             assert.include(newResultCardClass, 'wrong',
             'Added result card has the incorrect class after \'yesButton\' clicks when the answer is incorrect!');
         }
@@ -95,39 +79,26 @@ const { Builder, By, until } = require('selenium-webdriver'),
         newResultCardLastChild = await driver.findElement(By.css('.resultCard:last-child'));
         newResultCardClass = await newResultCardLastChild.getAttribute('class');
 
-        // Assert that a result card is added after 'noButton' clicks
         assert.equal(newResultCards.length, oldResultCards.length + 1,
             'Result card is not added after \'noButton\' clicks!');
-
-        // Assert that wait message is displayed after 'noButton' clicks
         assert.equal(await buttonHolder.isDisplayed(), false,
             'Buttons are not hidden after \'noButton\' clicks!');
-
-         // Assert that wait message is displayed after 'noButton' clicks
         assert.oneOf(await textPad.getText(), [waitMessage, roundStartMessage],
             'Wait message is not displayed after \'noButton\' clicks!');
 
-       // Assert that score and results are updated correctly after 'noButton' clicks
        if (answer){
             if (currentScore === 0)
-                // Assert that score doesn't change
                 assert.equal(await score.getText(), `Score: ${currentScore}`,
                 'Score changes after \'noButton\' clicks when the answer is wrong and the previous score was 0!');
             else
-                // Assert that score is decremented by 1
                 assert.equal(await score.getText(), `Score: ${currentScore - 1}`,
                 'Score is not decremented after \'noButton\' clicks when the answer is wrong and the previous score was not 0!');
-
-            // Assert that the newly added result card has the 'wrong' class
             assert.include(newResultCardClass, 'wrong',
             'Added result card has the incorrect class after \'noButton\' clicks when the answer is correct!');
         }
         else {
-            // Assert that score is incremented by 1
             assert.equal(await score.getText(), `Score: ${currentScore + 1}`,
             'Score is not incremented after \'noButton\' clicks when the answer is wrong!');
-
-            // Assert that the newly added result card has the 'correct' class
             assert.include(newResultCardClass, 'correct',
             'Added result card has the incorrect class after \'noButton\' clicks when the answer is incorrect!');
         }

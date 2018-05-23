@@ -4,7 +4,7 @@ const options = {
     maxValue : 10
 };
 
-let result; // Are we expecting a 'yes' or 'no' answer? Per round. 
+let expectedResponse;
 
 function getRandomNumber(max, min = 0) {
     if (!max || typeof(max) !== 'number' || typeof(min) !== 'number') return 0;
@@ -26,20 +26,14 @@ function getFakeAnswer(operator) {
     // Potential answer depends on the operator.
     // Just to make the game a bit more realistic/interesting/difficult in some sense
     switch(operator){
-        case '+':
-            answer = getRandomNumber(options.maxValue * 2, options.minValue * 2);
-            break;
-        case '-':
-            answer = getRandomNumber(options.maxValue - options.minValue);
-            break;
-        case '*':
-            answer = getRandomNumber(Math.pow(options.maxValue, 2), Math.pow(options.minValue, 2));
-            break;
+        case '+': answer = getRandomNumber(options.maxValue * 2, options.minValue * 2); break;
+        case '-': answer = getRandomNumber(options.maxValue - options.minValue); break;
+        case '*': answer = getRandomNumber(Math.pow(options.maxValue, 2), Math.pow(options.minValue, 2)); break;
         default: answer = getRandomNumber(options.maxValue / options.minValue, options.minValue / options.maxValue);
             break;
     }
 
-    result = 'no'; // Here we send the wrong answer so the correct response should be 'no'
+    expectedResponse = 'no';
     return parseFloat(answer);
 }
 
@@ -53,90 +47,62 @@ function getRealAnswer(operand1, operand2, operator) {
         default: answer = operand1 / operand2; break;
     }
 
-    result = 'yes'; // Here we send the correct answer so the correct response should be 'yes'
+    expectedResponse = 'yes';
     return parseFloat(answer.toFixed(2));
 }
 
 function createQuestion() {
-    // Generate a random question and answer
     let operand1 = getRandomNumber(options.maxValue, options.minValue),
         operand2 = getRandomNumber(options.maxValue, options.minValue),
         operator = options.operators[getRandomInt(options.operators.length-1)],
         coin = getRandomInt(10),
         answer = coin > 5 ? getRealAnswer(operand1, operand2, operator) : getFakeAnswer(operator);
 
-    return {
-        operand1,
-        operand2,
-        operator,
-        answer,
-        result
-    };
+    return { operand1, operand2, operator, answer, expectedResponse };
 }
 
 function createConnection(http) {
 
     let io = require('socket.io')(http),
-        roundClosed = true, 
-        checkInterval,
+        roundIsClosed = true,
+        roundCheckInterval,
         roundInterval,
         numberOfConnections = 0;
-    
+
     startIntervals();
 
     io.on('connection', socket => {
-        numberOfConnections++;
-        // We let each user know how many players are currently participating
-        io.emit('player update', numberOfConnections);
-
-        // Once we get a correct response from a player, we close the round
-        // to reject futher responses and prepare to start the next round
-        socket.on('answer', answer => {
-            if (!roundClosed) closeRound();
-        });
-        
-        // When a player leaves we notify the rest of the current number of
-        // participants
-        socket.on('disconnect', () => {
-            numberOfConnections--;
-            socket.broadcast.emit('player update', numberOfConnections);
-        });
+        io.emit('player update', numberOfConnections++);
+        socket.on('answer', answer => { if (!roundIsClosed) closeRound(); });
+        socket.on('disconnect', () => socket.broadcast.emit('player update', numberOfConnections--));
     });
-    
-    // If the current round has been closed, start next round after 5 seconds
-    function checkClosed() {
-        if (roundClosed){
+
+    function startIntervals() {
+        roundCheckInterval = setInterval(checkIfRoundIsClosed, 250);
+        roundInterval = setInterval(closeRound, 10000);
+    }
+
+    function stopIntervals() {
+        clearInterval(roundCheckInterval);
+        clearInterval(roundInterval);
+    }
+
+    function checkIfRoundIsClosed() {
+        if (roundIsClosed){
             stopIntervals();
             setTimeout(startRound, 5000);
         }
     }
 
-    // Generate random question and start round
     function startRound() {
         io.emit('question', createQuestion());
-        roundClosed = false;
+        roundIsClosed = false;
         startIntervals();
     }
 
-    // Close current round and notify players
     function closeRound() {
-        roundClosed = true;
+        roundIsClosed = true;
         io.emit('round closed', 'round closed');
-    }
-
-    // Start all intervals
-    function startIntervals() {
-        checkInterval = setInterval(checkClosed, 250);
-        
-        // If no correct response is received after 10 seconds, 
-        // start a new round
-        roundInterval = setInterval(closeRound, 10000);
-    }
-
-    // Stop all intervals
-    function stopIntervals() {
-        clearInterval(checkInterval);
-        clearInterval(roundInterval);
     }
 }
 

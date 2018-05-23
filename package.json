@@ -25,7 +25,6 @@
   "homepage": "https://homepage.com",
   "main": "server.js",
   "dependencies": {
-    "del": "*",
     "express": "*",
     "express-handlebars": "*",
     "glob": "*",
