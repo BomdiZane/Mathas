@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<meta charset='utf-8'>
+		<meta name="author" content={{ appInfo.author }}>
+		<meta name="keywords" content={{ appInfo.keywords }}>
+		<meta name="description" content={{ appInfo.description }}>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href={{ stylesheet }}>
+
+		{{#if login}}
+			<meta property="og:locale" content="en_US" />
+			<meta property="og:type" content="website" />
+			<meta property="og:title" content={{ appInfo.name }} />
+			<meta property="og:description" content={{ appInfo.description }} />
+			<meta property="og:url" content="http://appname.com/" />
+			<meta property="og:site_name" content={{ appInfo.name }} />
+			<meta property="og:image" content="http://appname.com/files/background.jpg" />
+			<meta name="google-signin-client_id" content="878555846318-p6gkt03i8k8p8i7jj37fp6cv3f5g1e95.apps.googleusercontent.com">
+			<link rel="canonical" href="http://www.appname.com" />
+		{{/if}}
+	</head>
+	<body>
+		<p id='statusP'></p>
+		<div id="blurDiv"></div>
+
+		{{{body}}}
+
+		{{#if devEnv}}
+			<script src="//localhost:35729/livereload.js"></script>
+		{{/if}}
+	</body>
+</html>

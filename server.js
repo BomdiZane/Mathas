@@ -9,13 +9,13 @@
 //     cluster.on('exit', () => cluster.fork());
 // }
 // else{
-    // Child cluster
-    const app = require('express')(),
-        config = require('./config/credentials'),
-        http = require('http').Server(app);
+// Child cluster
+const app = require('express')(),
+	credentials = require('./credentials'),
+	http = require('http').Server(app);
 
-    require('./config/socketio').createConnection(http);
-    http.listen(config.app.port, () => console.log(`Server started on port ${config.app.port}`));
+require('./app/webSocketConfig').createConnection(http);
+http.listen(credentials.port, () => console.log(`Server started on port ${credentials.port}`));
 
-    module.exports = require('./config/express')(app, config);
+module.exports = require('./app/expressConfig')(app, credentials);
 // }

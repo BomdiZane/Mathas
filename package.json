@@ -2,10 +2,7 @@
   "name": "mathas",
   "version": "1.0.0",
   "description": "Multiplayer math game",
-  "keywords": [
-    "Math",
-    "game"
-  ],
+  "keywords": ["Math", "game"],
   "author": "Bomdi Zane <dzedock@yahoo.com> (https://bomdizane.azurewebsites.net)",
   "contributors": [],
   "engines": {
@@ -14,15 +11,14 @@
   },
   "scripts": {
     "start": "gulp",
+    "serve": "nodemon ./server.js",
     "test": "gulp test",
-    "test:auto": "node ./tests/auto/homePageUITest.js",
-    "serve": "nodemon server.js",
-    "build:dev": "webpack -d",
+    "test:auto": "node ./tests/auto/homeUITest.js",
     "build:prod": "webpack -p"
   },
   "license": "ISC",
   "repository": {},
-  "homepage": "https://homepage.com",
+  "homepage": "https://mathas.azurewebsites.net",
   "main": "server.js",
   "dependencies": {
     "express": "*",
@@ -31,7 +27,6 @@
     "helmet": "*",
     "immutability-helper": "^2.7.0",
     "morgan": "*",
-    "prettyjson": "*",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "serve-favicon": "*",
@@ -58,6 +53,7 @@
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "optimize-css-assets-webpack-plugin": "^4.0.1",
+    "prettyjson": "*",
     "prop-types": "^15.6.1",
     "sass-loader": "^7.0.1",
     "selenium-webdriver": "^4.0.0-alpha.1",
