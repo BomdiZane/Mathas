@@ -2,12 +2,12 @@ button{
 	font: 14px Roboto;
 	margin: 0 5px;
 	padding: 8px 18px;
-	color: $bzWhite;
+	color: $primaryWhite;
 	cursor: pointer;
-	background-color: $bzBlue;
+	background-color: $secondaryBlue;
 	@include border-radius(4px);
 	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
-	&:hover{ background-color: $bzRed; }
+	&:hover{ background-color: $secondaryRed; }
 }
 
 .googleLogIn{
@@ -15,12 +15,12 @@ button{
 	padding-left: 52px;
 	padding-right: 30px;
 	color: #444;
-	background-color: $bzWhite;
+	background-color: $primaryWhite;
 	background-image: url(/images/googleButton.png);
 	background-position: 8px 50%;
 	background-repeat: no-repeat;
 	&:hover{
-		background-color: $bzWhite;
+		background-color: $primaryWhite;
 		box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
 	}
 }
@@ -70,5 +70,5 @@ button{
 	background-color: brown;
 	color: white;
 	opacity: 1;
-	&:hover{ background-color: $bzRed; }
+	&:hover{ background-color: $secondaryRed; }
 }

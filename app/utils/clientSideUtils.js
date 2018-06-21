@@ -37,7 +37,26 @@ export default function Utils() {
 		setTimeout(()=>{ statusP.style.display = 'block'; }, 50);
 	}
 
+	function translatePage(element){
+		
+		if (!element || element.classList.contains('selectedLanguage')) return;
+
+		let languages = A('.language');
+
+		for (let i = 0, len = languages.length; i < len; i++) {
+			if (languages[i].classList.contains('selectedLanguage')){
+				languages[i].classList.remove('selectedLanguage');
+				break;
+			}
+		}
+
+		element.classList.add('selectedLanguage');
+
+		// @TODO: TRANSLATE PAGE HERE
+	}
+
 	return {
+		translatePage,
 		inform,
 		failure,
 		warn,

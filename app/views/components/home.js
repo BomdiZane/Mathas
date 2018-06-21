@@ -19,8 +19,8 @@ class Home extends Component{
 					score: 0,
 				},
 				game: {
-					text: 'Wait for next round...',
-					time: 5,
+					text: 'Please wait...',
+					time: 10,
 				},
 			},
 			rules: {
@@ -82,7 +82,8 @@ class Home extends Component{
 		window.addEventListener('click', event => {
 			let element = event.target;
 
-			if (element.id === 'scrollToTop') Q('header').scrollIntoView({
+			if (element.classList.contains('language')) this.utils.translatePage(element);
+			else if (element.id === 'scrollToTop') Q('header').scrollIntoView({
 				behavior:'smooth',
 				block: 'start'
 			});

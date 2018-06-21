@@ -1,7 +1,6 @@
 @import 'partials/template';
 @import 'partials/header';
 @import 'partials/buttons';
-@import 'partials/forms';
 @import 'partials/socialIcons';
 @import 'partials/footer';
 
@@ -15,10 +14,7 @@
 	z-index: 20000;
 }
 #signInDiv{
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
+	@extend %flex-column;
 	&:hover #signInButtons{	display: flex; }
 
 	#signInMain{
@@ -26,8 +22,8 @@
 		padding: 6px 20px;
 		font: 100% Raleway;
 		text-align: center;
-		color: rgb(180, 105, 105);
-		background-color: white;
+		color: $primaryBrown;
+		background-color: $primaryWhite;
 		cursor: pointer;
 		box-shadow: 0 0 8px 0 rgba(0,0,0,0.3);
 	}
@@ -37,7 +33,7 @@
 		justify-content: center;
 		align-items: center;
 		@include border-radius(2px);
-		background-color: $bzWhite;
+		background-color: $primaryWhite;
 		box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 		margin-top: 10px;
 		position: absolute;
@@ -50,11 +46,11 @@
 		   	bottom: 100%;
 		   	border-width: 10px;
 		   	border-style: solid;
-		   	border-color: transparent transparent $bzWhite transparent;
+		   	border-color: transparent transparent $primaryWhite transparent;
 		}
 		p{
 			font: 90% Raleway;
-			color: rgb(180, 105, 105);
+			color: $primaryBrown;
 		}
 		button{	margin: 5px 0; }
 	}
@@ -62,19 +58,16 @@
 
 .title{
 	text-align: center;
-	background-color: $primaryGreen;
+	background-color: $darkGreen;
 	color: $primaryGrey;
 	font: 90% Lato;
 	cursor: default;
 }
 
 .content{
+	@extend %flex-column;
 	min-height: 250px;
 	max-height: 320px;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
 	overflow-y: auto;
 	box-shadow: $defaultShadow;
 }
@@ -85,12 +78,12 @@
 		display: none;
 		justify-content: space-around;
 		align-items: center;
-		background-color: lightblue;
+		background-color: $primaryBlue;
 
 		// button{ will-change: border-radius; }
 		button:hover{ @include border-radius(20px); }
-		#yesButton{	background-color: $bzGreen;	}
-		#noButton{ background-color: $bzRed; }
+		#yesButton{	background-color: $secondaryGreen;	}
+		#noButton{ background-color: $secondaryRed; }
 	}
 
 	// Timer Span
@@ -102,7 +95,7 @@
 		align-items: center;
 		cursor: default;
 		background-color: $primaryBlack;
-		color: $bzWhite;
+		color: $primaryWhite;
 		font: 150% Roboto;
 		text-align: center;
 		@include border-radius(50%);
@@ -115,7 +108,7 @@
 		align-items: center;
 	}
 	.content{
-		background-color: lightblue;
+		background-color: $primaryBlue;
 		justify-content: space-around;
 
 		#textPad{
@@ -127,13 +120,11 @@
 	}
 }
 
-// Rules
 #rules{
 	.content{ background-color: lavender; }
 	li{ font: 90%/1.4em Roboto; }
 }
 
-// results
 #results{
 	.content{
 		box-shadow: unset;
@@ -153,7 +144,7 @@
 
 		span{ font: 90%/1.4em Roboto; }
 	}
-	.correct{ background-color: lightgreen; }
-	.wrong{ background-color: lightcoral; }
-	.none{ background-color: grey; }
+	.correct{ background-color: $primaryGreen; }
+	.wrong{ background-color: $primaryRed; }
+	.none{ background-color: $secondaryGrey; }
 }

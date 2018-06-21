@@ -1,36 +1,7 @@
-/*FONTS*/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans|Indie+Flower|Raleway|Lato|Roboto);
-
-/*VARIABLES*/
-$primaryGreen: #64706c;
-$bzGreen: #18a888;
-$bzBlue: #1888a8;
-$bzWhite: #fbfbfb;
-$primaryRed: #f87a7c;
-$bzRed: crimson;
-$primaryGrey: #eee;
-$secondaryGrey: #b5b5b7;
-$defaultRadius: 5px;
-$primaryBlue: #677077;
-$secondaryBlue: #252839;
-$primaryBlack: #2d333a;
-$secondaryBlack: #262b30;
-$paraColor: rgba(0,0,0,0.87);
-$defaultShadow: 0 3px 6px rgba(0,0,0,0.1);
-
-/*MIXINGS*/
-@mixin transition($values...){
-	-webkit-transition: $values;
-	-moz-transition: $values;
-	-ms-transition: $values;
-	transition: $values;
-}
-@mixin border-radius($radius...) {
-	-webkit-border-radius: $radius;
-	-moz-border-radius: $radius;
-	-ms-border-radius: $radius;
-	border-radius: $radius;
-}
+@import 'variables';
+@import 'mixins';
+@import 'placeholders';
 
 *::-webkit-scrollbar{
 	width: 10px;
@@ -47,31 +18,52 @@ $defaultShadow: 0 3px 6px rgba(0,0,0,0.1);
 
 // CSS RESET
 *{
-	box-sizing:border-box;
+	box-sizing: border-box;
 	@include transition(all 0.1s ease-out);
 	outline: none;
 	border: none;
 }
-input[type='submit']{
-	margin: 30px 0;
-	padding: 5px 40px;
-	background-color: $bzGreen;
-	@include border-radius(20px);
-	cursor: pointer;
-	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.05);
-	&:hover{
-		color: $bzWhite;
-		background-color: $bzRed;
-	}
-}
-
 p{
 	cursor: default;
 	margin: 0;
 	color: $paraColor;
-	background-color: var(--color);
+}
+input[type='radio']{ cursor: pointer; }
+input[type='submit'], .submit{
+	margin: 30px 0;
+	padding: 5px 40px;
+	background-color: $secondaryGrey;
+	opacity: 0.9;
+	@include border-radius($defaultRadius);
+	cursor: pointer;
+	color: $secondaryWhite;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	&:hover{
+		text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+		background-color: $secondaryBlue;
+		opacity: 1;
+	}
+}
+a{
+	text-decoration: none;
+	cursor: pointer;
+	color: $secondaryBlue;
+	text-shadow: 0 4px 4px 0 rgba(0,0,0,0.05);
+	&:link { color: $secondaryBlue; }
+	&:visited { color: $primaryYellow; }
+	&:hover { color: #00bfff; }
+	&:active { color: $primaryRed; }
 }
 
+/*Header*/
+.brandName{
+	font: 160% Raleway;
+	padding: 5px 0;
+	color: $primaryWhite;
+	text-shadow: 0 4px 8px rgba(0,0,0,0.05);
+	
+	span{ color: $secondaryRed; }
+}
 h1{
 	cursor: default;
 	font: 170% Lato;
@@ -79,15 +71,13 @@ h1{
 	margin-top: 20px;
 	margin-bottom: 10px;
 }
-
 h2{
 	cursor: default;
 	font: 140% Lato;
-	color: $bzBlue;
+	color: $secondaryBlue;
 	margin-top: 0;
 	margin-bottom: 10px;
 }
-
 #statusP{
 	display: none;
 	position: fixed;
@@ -96,7 +86,7 @@ h2{
 	font-size: 160%;
 	margin: 0;
 	text-align: center;
-	color: $bzWhite;
+	color: $primaryWhite;
 	cursor: default;
 	text-shadow: 0 4px 8px rgba(0,0,0,0.1);
 	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -106,24 +96,11 @@ h2{
 
 // STYLE
 body{
+	@extend %flex-column;
 	margin: 0;
 	font: medium 'Lucida Sans Unicode', sans-serif;
 	overflow-x: hidden;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	background-color: #edd9c0;
-}
-
-.socialImage{
-	width: 35px;
-	height: 35px;
-	margin: 5px 0;
-	cursor: pointer;
-	@include border-radius(20px);
-	box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
-	@include transition(all 0.3s ease-out);
-	&:hover{ transform: rotateZ(360deg); }
 }
 
 /*Content*/
@@ -138,10 +115,7 @@ section{
 	margin-top: 20px;
 
 	>div{
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
+		@extend %flex-column;
 		flex-wrap: wrap;
 		width: 300px;
 		min-width: 300px;
@@ -157,7 +131,7 @@ section{
 	}
 }
 
-/*Wait Div*/
+/*Wait*/
 #blurDiv{
 	position: fixed;
 	left: 0;
@@ -178,12 +152,27 @@ section{
 	@include transition(all 0.3s ease-out);
 	animation: waitDivAni 1s linear infinite;
 	border: 2px solid transparent;
-	border-top: 2px solid lightgreen;
+	border-top: 2px solid $primaryYellow;
 }
 .hide{display: none;}
 .show{display: flex;}
+.noData{
+	display: none;
+	font: 100% Raleway;
+	color: $secondaryRed;
+	width: 100%;
+	text-align: center;
+	padding: 50px 0;
+}
 
-// Animations
+/*Animations*/
+@keyframes headerAni{
+	from{ top: -100px; }
+	to{ top: 0; }
+}
+@keyframes waitDivAni{
+	to{ transform: rotateZ(360deg); }
+}
 @keyframes statusPAni{
 	0%{ top: -70px; }
 	20%{ top: 0; }

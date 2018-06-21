@@ -1,0 +1,16 @@
+%icon{
+	width: 35px;
+	height: 35px;
+	margin: 5px 0;
+	cursor: pointer;
+	@include border-radius(20px);
+	box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
+	@include transition(all 0.3s ease-out);
+	&:hover{ transform: rotateZ(360deg); }
+}
+%flex-column{
+    display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+}

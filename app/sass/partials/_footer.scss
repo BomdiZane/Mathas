@@ -6,10 +6,12 @@ footer{
 	align-items: flex-start;
 	flex-wrap: wrap;
 	padding: 25px 35px;
+	padding-top: 15px;
 	margin-top: 20px;
 	box-shadow: 0 4px 12px 0 rgba(0,0,0,0.6);
-	background-color: $primaryGreen;
+	background-color: $darkGreen;
 
+	.brandName{ text-shadow: 0 4px 8px 0 rgba(0,0,0,0.5); }
 	#scrollToTop{
 		position: absolute;
 		right: 12px;
@@ -18,14 +20,14 @@ footer{
 		cursor: pointer;
 		transform: rotateZ(270deg);
 		color: #fbfbfb;
-		background-color: $primaryGreen;
+		background-color: $darkGreen;
 		@include border-radius(10px 20px 20px 10px);
 		box-shadow: $defaultShadow;
 		text-shadow: 0 4px 8px rgba(0,0,0,0.2);
 		z-index: 100;
 		&:hover{
 			background-color: #fbfbfb;
-			color: $primaryGreen;
+			color: $darkGreen;
 		}
 	}
 	#copy{
@@ -35,8 +37,7 @@ footer{
 		right: 0;
 		font-size: 80%;
 		text-align: center;
-		color: $primaryGrey;
-		background-color: $primaryGreen;
-		padding: 10px 0;
+		color: $secondaryGrey;
+		background-color: $darkGreen;
 	}
 }

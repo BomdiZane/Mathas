@@ -1,7 +1,7 @@
 @import 'partials/template';
 @import 'partials/header';
-@import 'partials/forms';
 @import 'partials/socialIcons';
+@import 'partials/footer';
 
 body{
     background-image: unset;
@@ -17,5 +17,5 @@ h1{
     width: 80vw;
     font-family: Raleway;
     line-height: 1.5em;
-    color: $bzWhite;
+    color: $primaryWhite;
 }
