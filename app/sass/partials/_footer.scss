@@ -8,42 +8,25 @@ footer{
 	padding: 25px 35px;
 	margin-top: 20px;
 	box-shadow: 0 4px 12px 0 rgba(0,0,0,0.6);
-	background-color: $primaryBlack;
+	background-color: $primaryGreen;
 
-	#subscribeDiv{
-		width: 35%;
-		min-width: 280px;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		
-		#subscribeButton{
-			@include border-radius(50px);
-			height: unset;
-			padding: 8px 20px;
-			font: 100% Raleway;
-			cursor: pointer;
-			color: $bzWhite;
-			background-color: $bzGreen;
-			box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
-			&:hover{ background-color: $bzRed; }
-			margin: 30px 0;
-		}
-	}
 	#scrollToTop{
 		position: absolute;
-		right: 80px;
+		right: 12px;
 		bottom: 100%;
-		padding: 2px 10px;
-		color: white;
+		padding: 2px 12px;
 		cursor: pointer;
 		transform: rotateZ(270deg);
-		background-color: $primaryBlack;
-		@include border-radius(0 20px 20px 0);
-		z-index: 1000;
-		
-		&:hover{ color: $bzRed; }
+		color: #fbfbfb;
+		background-color: $primaryGreen;
+		@include border-radius(10px 20px 20px 10px);
+		box-shadow: $defaultShadow;
+		text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+		z-index: 100;
+		&:hover{
+			background-color: #fbfbfb;
+			color: $primaryGreen;
+		}
 	}
 	#copy{
 		position: absolute;
@@ -52,7 +35,8 @@ footer{
 		right: 0;
 		font-size: 80%;
 		text-align: center;
-		color: grey;
-		background-color: $secondaryBlack;
+		color: $primaryGrey;
+		background-color: $primaryGreen;
+		padding: 10px 0;
 	}
 }

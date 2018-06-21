@@ -4,7 +4,7 @@ const { Builder, By, until } = require('selenium-webdriver'),
 (async function testButtonVisibilityTogglesBetweenRounds() {
 	let driver = await new Builder().forBrowser('firefox').build(),
 		waitMessage = 'Wait for next round...',
-		roundStartMessage = 'Round starts in',
+		roundStartMessage = 'Next round starts in',
 		timerMaxVal = '10';
 
 	try {

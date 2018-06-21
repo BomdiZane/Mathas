@@ -2,14 +2,17 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans|Indie+Flower|Raleway|Lato|Roboto);
 
 /*VARIABLES*/
+$primaryGreen: #64706c;
 $bzGreen: #18a888;
 $bzBlue: #1888a8;
 $bzWhite: #fbfbfb;
-$primaryGrey: #eee;
-$secondaryGrey: #bbb;
+$primaryRed: #f87a7c;
 $bzRed: crimson;
+$primaryGrey: #eee;
+$secondaryGrey: #b5b5b7;
 $defaultRadius: 5px;
-$primaryBlue: #3a5b78;
+$primaryBlue: #677077;
+$secondaryBlue: #252839;
 $primaryBlack: #2d333a;
 $secondaryBlack: #262b30;
 $paraColor: rgba(0,0,0,0.87);
@@ -27,6 +30,19 @@ $defaultShadow: 0 3px 6px rgba(0,0,0,0.1);
 	-moz-border-radius: $radius;
 	-ms-border-radius: $radius;
 	border-radius: $radius;
+}
+
+*::-webkit-scrollbar{
+	width: 10px;
+	background-color: $secondaryGrey;
+}
+*::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+*::-webkit-scrollbar-thumb{
+	@include border-radius($defaultRadius);
+	background-color: $primaryGrey;
 }
 
 // CSS RESET
@@ -96,7 +112,7 @@ body{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background-color: $bzWhite;
+	background-color: #edd9c0;
 }
 
 .socialImage{

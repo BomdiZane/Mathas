@@ -19,7 +19,7 @@ export default function Utils() {
 	function warn(message='Failed!'){
 		statusP.style.display = 'none';
 		statusP.textContent = message;
-		statusP.style.backgroundColor = 'tomato';
+		statusP.style.backgroundColor = '#f87a7c';
 		setTimeout(()=>{ statusP.style.display = 'block'; }, 50);
 	}
 

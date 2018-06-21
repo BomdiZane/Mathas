@@ -2,6 +2,21 @@
 /*FONTS*/
 /*VARIABLES*/
 /*MIXINGS*/
+*::-webkit-scrollbar {
+  width: 10px;
+  background-color: #b5b5b7; }
+
+*::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
+
+*::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #eee; }
+
 * {
   box-sizing: border-box;
   -webkit-transition: all 0.1s ease-out;
@@ -67,7 +82,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fbfbfb; }
+  background-color: #edd9c0; }
 
 .socialImage {
   width: 35px;
@@ -171,7 +186,7 @@ header {
   padding: 10px;
   padding-left: 10%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #3a5b78;
+  background-color: #64706c;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start; }
@@ -403,45 +418,26 @@ footer {
   padding: 25px 35px;
   margin-top: 20px;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.6);
-  background-color: #2d333a; }
-  footer #subscribeDiv {
-    width: 35%;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center; }
-    footer #subscribeDiv #subscribeButton {
-      -webkit-border-radius: 50px;
-      -moz-border-radius: 50px;
-      -ms-border-radius: 50px;
-      border-radius: 50px;
-      height: unset;
-      padding: 8px 20px;
-      font: 100% Raleway;
-      cursor: pointer;
-      color: #fbfbfb;
-      background-color: #18a888;
-      box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
-      margin: 30px 0; }
-      footer #subscribeDiv #subscribeButton:hover {
-        background-color: crimson; }
+  background-color: #64706c; }
   footer #scrollToTop {
     position: absolute;
-    right: 80px;
+    right: 12px;
     bottom: 100%;
-    padding: 2px 10px;
-    color: white;
+    padding: 2px 12px;
     cursor: pointer;
     transform: rotateZ(270deg);
-    background-color: #2d333a;
-    -webkit-border-radius: 0 20px 20px 0;
-    -moz-border-radius: 0 20px 20px 0;
-    -ms-border-radius: 0 20px 20px 0;
-    border-radius: 0 20px 20px 0;
-    z-index: 1000; }
+    color: #fbfbfb;
+    background-color: #64706c;
+    -webkit-border-radius: 10px 20px 20px 10px;
+    -moz-border-radius: 10px 20px 20px 10px;
+    -ms-border-radius: 10px 20px 20px 10px;
+    border-radius: 10px 20px 20px 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100; }
     footer #scrollToTop:hover {
-      color: crimson; }
+      background-color: #fbfbfb;
+      color: #64706c; }
   footer #copy {
     position: absolute;
     bottom: 0;
@@ -449,8 +445,9 @@ footer {
     right: 0;
     font-size: 80%;
     text-align: center;
-    color: grey;
-    background-color: #262b30; }
+    color: #eee;
+    background-color: #64706c;
+    padding: 10px 0; }
 
 /*Sign In Main*/
 #loggedInUser, #signInDiv {
@@ -510,7 +507,7 @@ footer {
 
 .title {
   text-align: center;
-  background-color: #4f8fa5;
+  background-color: #64706c;
   color: #eee;
   font: 90% Lato;
   cursor: default; }

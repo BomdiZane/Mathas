@@ -2,22 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from './head';
 import Card from './card';
-import Game from './game';
-import Status from './status';
-import Buttons from './buttons';
 
-const Main = ({ states }) => {
-    return (
-        <div id='main'>
-            <Head body={ <Status states={ states.status }  /> } />
-            <Card body={ <Game states={ states.game } /> } />
-            <Buttons />
-        </div>
-    );
+const Main = ({ states, handleAnswer, buttonDisplay }) => {
+	return (
+		<div id='main'>
+			<Head>
+				<span id="numPlayers">Players: { states.status.numberOfPlayers }</span>
+				<span id="score">Score: { states.status.score }</span>
+			</Head>
+
+			<Card>
+				<p id="textPad">{ states.game.text }</p>
+				<span id="timer">{ states.game.time }</span>
+			</Card>
+
+			<div id="buttonHolder" style={{ display: buttonDisplay }}>
+				<button id="yesButton" onClick={ () => handleAnswer('yes') }>Yes</button>
+				<button id="noButton" onClick={ () => handleAnswer('no') }>No</button>
+			</div>
+		</div>
+	);
 };
 
 Main.propTypes = {
-    states: PropTypes.object.isRequired,
+	states: PropTypes.object.isRequired,
+	handleAnswer: PropTypes.func.isRequired,
+	buttonDisplay: PropTypes.string.isRequired,
 };
 
 export default Main;
