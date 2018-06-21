@@ -1,6 +1,6 @@
 # Mathas
 
-Multiplayer math game with websockets ([website](https://mathas.azurewebsites.net/))
+Multiplayer math game with Node, Express, Handlebars, React, Websockets ([website](https://mathas.azurewebsites.net/))
 
 ## First Run
 
