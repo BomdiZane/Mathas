@@ -6,7 +6,7 @@ const gulp = require('gulp'),
 	webpack_stream = require('webpack-stream'),
 	webpack_config = require('./webpack.config.js');
 
-const testSrc = 'tests/unit/*.js',
+const testSrc = 'tests/unit/*.unit.test.js',
 	webpackSrc = ['app/views/components/**/*.js', 'app/sass/**/*.scss'],
 	webpackDest = 'app/static/js/',
 	reloadSrc = ['app/views/templates/**/*.hbs', 'app/static/images/*.*', 'app/static/thumbs/*.*'];

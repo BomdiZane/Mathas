@@ -18,9 +18,9 @@ npm start
 // Unit tests
 npm run test
 
-// Automation tests (with Selenium)
+// End-to-end tests (with Selenium)
 npm start // If the server isn't running already
-npm run test:auto
+npm run test:ete
 
 ```
 

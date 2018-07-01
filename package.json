@@ -13,7 +13,7 @@
     "start": "gulp",
     "serve": "nodemon ./server.js",
     "test": "gulp test",
-    "test:auto": "node ./tests/auto/homeUITest.js",
+    "test:ete": "node ./tests/ete/home.ete.test.js",
     "build:prod": "webpack -p"
   },
   "license": "ISC",
